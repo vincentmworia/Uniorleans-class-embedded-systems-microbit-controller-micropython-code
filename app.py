@@ -12,6 +12,12 @@ def get_cpu_temp():
         return round(int(f.read().strip()) / 1000.0, 2)
 
 client = mqtt.Client(client_id="ep08")
+client.will_set(
+    TOPIC,
+    payload=json.dumps({"eui": EUI, "status": "off"}),
+    qos=1,
+    retain=True
+)
 client.connect(BROKER, PORT, 30)
 client.loop_start()
 
